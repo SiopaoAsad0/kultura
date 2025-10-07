@@ -1,38 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../api/axios';
-import { Link } from 'react-router-dom';
+// frontend/src/pages/ProductList.js
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { Card, Container, Row, Col, Button } from "react-bootstrap";
 
-export default function ProductList(){
+export default function ProductList({ user }) {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(()=>{
-    axios.get('/products')
-      .then(res => setProducts(res.data))
-      .catch(err => console.error(err))
-      .finally(()=> setLoading(false));
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get("http://127.0.0.1:8000/api/products");
+        setProducts(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchProducts();
   }, []);
 
-  if(loading) return <p>Loading...</p>;
-
   return (
-    <div>
-      <h2>Products</h2>
-      <div className="row">
-        {products.map(p => (
-          <div className="col-md-4 mb-3" key={p.id}>
-            <div className="card h-100">
-              {p.image && <img src={process.env.REACT_APP_API_URL + '/' + p.image} className="card-img-top" alt={p.title} />}
-              <div className="card-body">
-                <h5 className="card-title">{p.title}</h5>
-                <p className="card-text">{p.story?.slice(0, 80)}...</p>
-                <p className="card-text"><strong>₱{p.price}</strong></p>
-                <Link to={`/products/${p.id}`} className="btn btn-sm btn-primary">Details</Link>
-              </div>
-            </div>
-          </div>
+    <Container>
+      <h1 className="mb-4">Our Products</h1>
+      <Row>
+        {products.map((product) => (
+          <Col md={4} key={product.id} className="mb-3">
+            <Card>
+              <Card.Body>
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Text>{product.story.substring(0, 80)}...</Card.Text>
+                <Card.Text><strong>₱{product.price}</strong></Card.Text>
+                <Button
+                  as={Link}
+                  to={`/products/${product.id}`}
+                  variant="primary"
+                >
+                  View Details
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 }
