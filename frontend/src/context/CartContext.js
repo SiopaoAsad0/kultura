@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import API from "../api/axios";
 
 const CartContext = createContext();
 
@@ -14,7 +14,7 @@ export const CartProvider = ({ children, user }) => {
       if (!user) return;
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://127.0.0.1:8000/api/cart", {
+        const res = await API.get("/cart", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCart(res.data);
@@ -32,8 +32,8 @@ export const CartProvider = ({ children, user }) => {
     }
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        "http://127.0.0.1:8000/api/cart/add",
+      await API.post(
+        "/cart/add",
         { product_id: product.id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -43,14 +43,14 @@ export const CartProvider = ({ children, user }) => {
     }
   };
 
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (cartItemId) => {
     if (!user) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://127.0.0.1:8000/api/cart/remove/${productId}`, {
+      await API.delete(`/cart/${cartItemId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCart(cart.filter((item) => item.id !== productId));
+      setCart(cart.filter((item) => item.id !== cartItemId));
     } catch (err) {
       console.error("Failed to remove from cart:", err);
     }

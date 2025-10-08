@@ -1,0 +1,870 @@
+/* Kultura - Cultural Heritage Theme */
+
+/* ===== CULTURAL HERITAGE COLOR PALETTE ===== */
+:root {
+  /* Primary Colors - Inspired by traditional Filipino textiles */
+  --cultural-primary: #8B4513;        /* Rich brown from traditional weaves */
+  --cultural-primary-light: #A0522D;  /* Lighter brown */
+  --cultural-primary-dark: #654321;   /* Darker brown */
+  
+  /* Secondary Colors - Inspired by natural dyes */
+  --cultural-secondary: #D2691E;      /* Warm orange from annatto */
+  --cultural-secondary-light: #F4A460; /* Light sandy brown */
+  --cultural-secondary-dark: #CD853F;  /* Darker sandy brown */
+  
+  /* Accent Colors - Inspired by traditional patterns */
+  --cultural-accent: #B8860B;         /* Golden yellow from turmeric */
+  --cultural-accent-light: #DAA520;   /* Light gold */
+  --cultural-accent-dark: #9A7209;    /* Dark gold */
+  
+  /* Earth Tones - Inspired by natural materials */
+  --cultural-earth: #8FBC8F;          /* Sage green from natural dyes */
+  --cultural-earth-light: #98FB98;    /* Light sage */
+  --cultural-earth-dark: #556B2F;     /* Dark forest green */
+  
+  /* Neutral Colors - Inspired by natural fibers */
+  --cultural-neutral: #F5F5DC;        /* Beige from natural cotton */
+  --cultural-neutral-light: #FFFEF7;  /* Cream white */
+  --cultural-neutral-dark: #D2B48C;   /* Tan */
+  
+  /* Text Colors */
+  --cultural-text-primary: #2F1B14;   /* Dark brown for primary text */
+  --cultural-text-secondary: #5D4037; /* Medium brown for secondary text */
+  --cultural-text-light: #8D6E63;     /* Light brown for muted text */
+  
+  /* Background Colors */
+  --cultural-bg-primary: #FFFEF7;     /* Cream white background */
+  --cultural-bg-secondary: #F5F5DC;   /* Beige background */
+  --cultural-bg-accent: #FDF5E6;      /* Old lace accent background */
+  
+  /* Border Colors */
+  --cultural-border: #D2B48C;         /* Tan borders */
+  --cultural-border-light: #E6D7C3;   /* Light tan borders */
+  
+  /* Status Colors */
+  --cultural-success: #228B22;        /* Forest green */
+  --cultural-warning: #FF8C00;        /* Dark orange */
+  --cultural-error: #DC143C;          /* Crimson red */
+  --cultural-info: #4682B4;           /* Steel blue */
+  
+  /* Shadows */
+  --cultural-shadow: rgba(47, 27, 20, 0.1);
+  --cultural-shadow-light: rgba(47, 27, 20, 0.05);
+  --cultural-shadow-dark: rgba(47, 27, 20, 0.2);
+}
+
+/* ===== CULTURAL HERITAGE TYPOGRAPHY ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap');
+
+.cultural-font-primary {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+}
+
+.cultural-font-secondary {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+}
+
+/* ===== CULTURAL HERITAGE COMPONENTS ===== */
+
+/* Cultural Heritage Buttons */
+.btn-cultural-primary {
+  background: linear-gradient(135deg, var(--cultural-primary), var(--cultural-primary-light));
+  border: 2px solid var(--cultural-primary-dark);
+  color: var(--cultural-neutral-light);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px var(--cultural-shadow);
+}
+
+.btn-cultural-primary:hover {
+  background: linear-gradient(135deg, var(--cultural-primary-dark), var(--cultural-primary));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--cultural-shadow-dark);
+  color: var(--cultural-neutral-light);
+}
+
+.btn-cultural-secondary {
+  background: linear-gradient(135deg, var(--cultural-secondary), var(--cultural-secondary-light));
+  border: 2px solid var(--cultural-secondary-dark);
+  color: var(--cultural-text-primary);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px var(--cultural-shadow);
+}
+
+.btn-cultural-secondary:hover {
+  background: linear-gradient(135deg, var(--cultural-secondary-dark), var(--cultural-secondary));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--cultural-shadow-dark);
+  color: var(--cultural-text-primary);
+}
+
+.btn-cultural-accent {
+  background: linear-gradient(135deg, var(--cultural-accent), var(--cultural-accent-light));
+  border: 2px solid var(--cultural-accent-dark);
+  color: var(--cultural-text-primary);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px var(--cultural-shadow);
+}
+
+.btn-cultural-accent:hover {
+  background: linear-gradient(135deg, var(--cultural-accent-dark), var(--cultural-accent));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--cultural-shadow-dark);
+  color: var(--cultural-text-primary);
+}
+
+/* Cultural Heritage Cards */
+.card-cultural {
+  background: var(--cultural-bg-primary);
+  border: 2px solid var(--cultural-border-light);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px var(--cultural-shadow-light);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card-cultural:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px var(--cultural-shadow);
+  border-color: var(--cultural-border);
+}
+
+.card-cultural .card-header {
+  background: linear-gradient(135deg, var(--cultural-primary), var(--cultural-primary-light));
+  color: var(--cultural-neutral-light);
+  border-bottom: 2px solid var(--cultural-primary-dark);
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  padding: 16px 20px;
+}
+
+.card-cultural .card-body {
+  background: var(--cultural-bg-primary);
+  padding: 20px;
+}
+
+.card-cultural .card-footer {
+  background: var(--cultural-bg-secondary);
+  border-top: 1px solid var(--cultural-border-light);
+  padding: 16px 20px;
+}
+
+/* Cultural Heritage Forms */
+.form-cultural .form-control {
+  background: var(--cultural-bg-primary);
+  border: 2px solid var(--cultural-border-light);
+  border-radius: 8px;
+  color: var(--cultural-text-primary);
+  font-family: 'Source Sans Pro', sans-serif;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.form-cultural .form-control:focus {
+  background: var(--cultural-bg-primary);
+  border-color: var(--cultural-primary);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+  color: var(--cultural-text-primary);
+}
+
+.form-cultural .form-label {
+  color: var(--cultural-text-primary);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+/* Cultural Heritage Navigation */
+.navbar-cultural {
+  background: linear-gradient(135deg, var(--cultural-primary), var(--cultural-primary-light));
+  border-bottom: 3px solid var(--cultural-primary-dark);
+  box-shadow: 0 4px 8px var(--cultural-shadow);
+}
+
+.navbar-cultural .navbar-brand {
+  color: var(--cultural-neutral-light);
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.navbar-cultural .nav-link {
+  color: var(--cultural-neutral-light);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.navbar-cultural .nav-link:hover {
+  color: var(--cultural-accent-light);
+  transform: translateY(-1px);
+}
+
+/* Cultural Heritage Alerts */
+.alert-cultural-success {
+  background: linear-gradient(135deg, var(--cultural-earth), var(--cultural-earth-light));
+  border: 2px solid var(--cultural-earth-dark);
+  color: var(--cultural-text-primary);
+  border-radius: 8px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.alert-cultural-warning {
+  background: linear-gradient(135deg, var(--cultural-warning), #FFA500);
+  border: 2px solid #FF8C00;
+  color: var(--cultural-neutral-light);
+  border-radius: 8px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.alert-cultural-error {
+  background: linear-gradient(135deg, var(--cultural-error), #FF6B6B);
+  border: 2px solid #B22222;
+  color: var(--cultural-neutral-light);
+  border-radius: 8px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Cultural Heritage Badges */
+.badge-cultural {
+  background: linear-gradient(135deg, var(--cultural-accent), var(--cultural-accent-light));
+  color: var(--cultural-text-primary);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--cultural-accent-dark);
+}
+
+/* Cultural Heritage Tables */
+.table-cultural {
+  background: var(--cultural-bg-primary);
+  border: 2px solid var(--cultural-border-light);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-cultural thead {
+  background: linear-gradient(135deg, var(--cultural-primary), var(--cultural-primary-light));
+  color: var(--cultural-neutral-light);
+}
+
+.table-cultural thead th {
+  border: none;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  padding: 16px;
+}
+
+.table-cultural tbody tr {
+  border-bottom: 1px solid var(--cultural-border-light);
+  transition: all 0.3s ease;
+}
+
+.table-cultural tbody tr:hover {
+  background: var(--cultural-bg-accent);
+}
+
+.table-cultural tbody td {
+  border: none;
+  padding: 16px;
+  color: var(--cultural-text-primary);
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Cultural Heritage Containers */
+.container-cultural {
+  background: var(--cultural-bg-primary);
+  border: 2px solid var(--cultural-border-light);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 16px var(--cultural-shadow-light);
+}
+
+/* Cultural Heritage Headers */
+.header-cultural {
+  background: linear-gradient(135deg, var(--cultural-primary), var(--cultural-primary-light));
+  color: var(--cultural-neutral-light);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 16px var(--cultural-shadow);
+  margin-bottom: 24px;
+}
+
+.header-cultural h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin: 0;
+  text-shadow: 2px 2px 4px var(--cultural-shadow-dark);
+}
+
+.header-cultural p {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  margin: 8px 0 0 0;
+  opacity: 0.9;
+}
+
+/* Cultural Heritage Patterns */
+.cultural-pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.cultural-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, var(--cultural-accent-light) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, var(--cultural-secondary-light) 2px, transparent 2px);
+  background-size: 20px 20px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* Cultural Heritage Animations */
+@keyframes culturalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cultural-fade-in {
+  animation: culturalFadeIn 0.6s ease-out;
+}
+
+/* Enhanced Animations */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.cultural-slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.cultural-slide-in-right {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.cultural-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.cultural-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Enhanced Card Styles */
+.card-cultural {
+  border: 1px solid var(--cultural-border-light);
+  background-color: var(--cultural-bg-secondary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-cultural:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: var(--cultural-accent);
+}
+
+.card-cultural .card-body {
+  padding: 1.5rem;
+}
+
+.card-cultural .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.card-cultural .card-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Enhanced Button Styles */
+.btn-cultural-primary {
+  background: linear-gradient(135deg, var(--cultural-primary) 0%, var(--cultural-primary-dark) 100%);
+  border: none;
+  color: var(--cultural-text-light);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+}
+
+.btn-cultural-primary:hover {
+  background: linear-gradient(135deg, var(--cultural-primary-dark) 0%, var(--cultural-primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+  color: var(--cultural-text-light);
+}
+
+.btn-cultural-secondary {
+  background: linear-gradient(135deg, var(--cultural-secondary) 0%, var(--cultural-secondary-dark) 100%);
+  border: none;
+  color: var(--cultural-text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(210, 105, 30, 0.3);
+}
+
+.btn-cultural-secondary:hover {
+  background: linear-gradient(135deg, var(--cultural-secondary-dark) 0%, var(--cultural-secondary) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(210, 105, 30, 0.4);
+  color: var(--cultural-text-primary);
+}
+
+.btn-cultural-accent {
+  background: linear-gradient(135deg, var(--cultural-accent) 0%, var(--cultural-accent-dark) 100%);
+  border: none;
+  color: var(--cultural-text-light);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
+}
+
+.btn-cultural-accent:hover {
+  background: linear-gradient(135deg, var(--cultural-accent-dark) 0%, var(--cultural-accent) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 134, 11, 0.4);
+  color: var(--cultural-text-light);
+}
+
+/* Enhanced Container Styles */
+.container-cultural {
+  background-color: var(--cultural-bg-primary);
+  border: 1px solid var(--cultural-border-light);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.container-cultural:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* Enhanced Header Styles */
+.header-cultural {
+  background: linear-gradient(135deg, var(--cultural-primary-dark) 0%, var(--cultural-primary) 50%, var(--cultural-secondary) 100%);
+  color: var(--cultural-text-light);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.header-cultural::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+}
+
+.header-cultural h1 {
+  font-family: var(--cultural-font-primary);
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.header-cultural p {
+  font-family: var(--cultural-font-secondary);
+  font-size: 1.3rem;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Enhanced Form Styles */
+.form-cultural .form-label {
+  color: var(--cultural-primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-cultural .form-control {
+  border: 2px solid var(--cultural-border-light);
+  color: var(--cultural-text-primary);
+  background-color: var(--cultural-bg-secondary);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.form-cultural .form-control:focus {
+  border-color: var(--cultural-accent);
+  box-shadow: 0 0 0 0.25rem rgba(184, 134, 11, 0.25);
+  background-color: var(--cultural-bg-primary);
+}
+
+.form-cultural .form-select {
+  border: 2px solid var(--cultural-border-light);
+  color: var(--cultural-text-primary);
+  background-color: var(--cultural-bg-secondary);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.form-cultural .form-select:focus {
+  border-color: var(--cultural-accent);
+  box-shadow: 0 0 0 0.25rem rgba(184, 134, 11, 0.25);
+  background-color: var(--cultural-bg-primary);
+}
+
+/* Enhanced Badge Styles */
+.badge-cultural {
+  background: linear-gradient(135deg, var(--cultural-secondary-light) 0%, var(--cultural-secondary) 100%);
+  color: var(--cultural-text-primary);
+  padding: 0.5rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Enhanced Progress Bar */
+.progress {
+  height: 12px;
+  border-radius: 10px;
+  background-color: var(--cultural-bg-secondary);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--cultural-accent) 0%, var(--cultural-accent-light) 100%);
+  border-radius: 10px;
+  transition: width 0.6s ease;
+  box-shadow: 0 2px 4px rgba(184, 134, 11, 0.3);
+}
+
+/* Enhanced Modal Styles */
+.modal-content {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--cultural-primary) 0%, var(--cultural-primary-dark) 100%);
+  border: none;
+  padding: 1.5rem 2rem;
+}
+
+.modal-title {
+  color: var(--cultural-text-light);
+  font-family: var(--cultural-font-primary);
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 2rem;
+  background-color: var(--cultural-bg-primary);
+}
+
+.modal-footer {
+  background-color: var(--cultural-bg-secondary);
+  border: none;
+  padding: 1.5rem 2rem;
+}
+
+/* Enhanced Spacing Utilities */
+.cultural-section {
+  padding: 3rem 0;
+}
+
+/* Page Container Spacing */
+.page-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.page-section {
+  margin-bottom: 4rem;
+}
+
+.page-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Consistent Grid Spacing */
+.grid-container {
+  margin-top: 2rem;
+}
+
+.grid-row {
+  margin-bottom: 2rem;
+}
+
+.grid-item {
+  margin-bottom: 2rem;
+}
+
+/* Standardized Card Heights */
+.card-story {
+  min-height: 450px;
+}
+
+.card-fundraising {
+  min-height: 500px;
+}
+
+.card-imagery {
+  min-height: 350px;
+}
+
+.card-product {
+  min-height: 400px;
+}
+
+.cultural-mb-1 { margin-bottom: 0.5rem; }
+.cultural-mb-2 { margin-bottom: 1rem; }
+.cultural-mb-3 { margin-bottom: 1.5rem; }
+.cultural-mb-4 { margin-bottom: 2rem; }
+.cultural-mb-5 { margin-bottom: 3rem; }
+
+.cultural-mt-1 { margin-top: 0.5rem; }
+.cultural-mt-2 { margin-top: 1rem; }
+.cultural-mt-3 { margin-top: 1.5rem; }
+.cultural-mt-4 { margin-top: 2rem; }
+.cultural-mt-5 { margin-top: 3rem; }
+
+.cultural-p-1 { padding: 0.5rem; }
+.cultural-p-2 { padding: 1rem; }
+.cultural-p-3 { padding: 1.5rem; }
+.cultural-p-4 { padding: 2rem; }
+.cultural-p-5 { padding: 3rem; }
+
+/* Responsive Design */
+/* Enhanced Navigation Hover Effects */
+.navbar-cultural .nav-link:hover {
+  background-color: rgba(255,255,255,0.2) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.navbar-cultural .nav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-cultural .nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.navbar-cultural .nav-link:hover::before {
+  left: 100%;
+}
+
+/* Enhanced Image Hover Effects */
+.image-overlay {
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.card-cultural:hover .image-overlay {
+  opacity: 1;
+  transform: translateY(0) !important;
+}
+
+/* Enhanced Card Hover Effects */
+.card-cultural:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+/* Enhanced Button Hover Effects */
+.btn-cultural-primary:hover,
+.btn-cultural-secondary:hover,
+.btn-cultural-accent:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* Enhanced Form Focus Effects */
+.form-cultural .form-control:focus,
+.form-cultural .form-select:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 0.25rem rgba(184, 134, 11, 0.25), 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Enhanced Badge Hover Effects */
+.badge-cultural:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Enhanced Progress Bar Animation */
+.progress-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, .2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, .2) 50%,
+    rgba(255, 255, 255, .2) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 50px 50px;
+  animation: move 2s linear infinite;
+}
+
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-cultural {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .header-cultural h1 {
+    font-size: 2.5rem;
+  }
+  
+  .header-cultural p {
+    font-size: 1.1rem;
+  }
+  
+  .container-cultural {
+    padding: 1.5rem;
+  }
+  
+  .cultural-section {
+    padding: 2rem 0;
+  }
+  
+  .btn-cultural-primary,
+  .btn-cultural-secondary,
+  .btn-cultural-accent {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .card-cultural .card-body {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-cultural h1 {
+    font-size: 2rem;
+  }
+  
+  .header-cultural p {
+    font-size: 1rem;
+  }
+  
+  .container-cultural {
+    padding: 1rem;
+  }
+  
+  .btn-cultural-primary,
+  .btn-cultural-secondary,
+  .btn-cultural-accent {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}

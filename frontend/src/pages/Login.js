@@ -1,8 +1,8 @@
 // frontend/src/pages/Login.js
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import API from "../api/axios";
 
 export default function Login({ setUser }) {  // <-- Add setUser here
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Login({ setUser }) {  // <-- Add setUser here
     setError("");
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/login", form);
+      const res = await API.post("/login", form);
       alert(res.data.message);
 
       // Save user in localStorage
@@ -31,34 +31,83 @@ export default function Login({ setUser }) {  // <-- Add setUser here
   };
 
   return (
-    <Container>
-      <h1 className="mb-4">Login</h1>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            required
-          />
-        </Form.Group>
+    <div className="cultural-section">
+      <Container>
+        <div className="cultural-text-center cultural-mb-4">
+          <div className="header-cultural cultural-fade-in">
+            <h1>🔑 Welcome Back</h1>
+            <p>Sign in to continue your cultural journey</p>
+          </div>
+        </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            required
-          />
-        </Form.Group>
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-5">
+            <div className="container-cultural cultural-fade-in">
+              {error && (
+                <div className="alert-cultural-error cultural-mb-4">
+                  ⚠️ {error}
+                </div>
+              )}
+              
+              <Form onSubmit={handleSubmit} className="form-cultural">
+                <Form.Group className="cultural-mb-3">
+                  <Form.Label className="cultural-font-secondary">
+                    📧 Email Address
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter your email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    required
+                    className="cultural-font-secondary"
+                  />
+                </Form.Group>
 
-        <Button type="submit">Login</Button>
-      </Form>
-    </Container>
+                <Form.Group className="cultural-mb-4">
+                  <Form.Label className="cultural-font-secondary">
+                    🔒 Password
+                  </Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter your password"
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    required
+                    className="cultural-font-secondary"
+                  />
+                </Form.Group>
+
+                <div className="d-grid">
+                  <Button 
+                    type="submit" 
+                    className="btn-cultural-primary"
+                    size="lg"
+                  >
+                    🚪 Sign In
+                  </Button>
+                </div>
+              </Form>
+
+              <div className="cultural-text-center cultural-mt-4">
+                <p className="cultural-font-secondary" style={{ color: 'var(--cultural-text-secondary)' }}>
+                  Don't have an account?{' '}
+                  <Link 
+                    to="/register" 
+                    style={{ 
+                      color: 'var(--cultural-primary)', 
+                      textDecoration: 'none',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Create one here
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </div>
   );
 }

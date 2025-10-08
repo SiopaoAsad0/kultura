@@ -12,12 +12,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //user Seed
+        // Cultural Categories Seed (run first as products depend on categories)
+        $this->call(CulturalCategoriesTableSeeder::class);
+        
+        // User Seed
         $this->call(UsersTableSeeder::class);
 
-        //product Seed
+        // Product Seed (runs after categories and users)
         $this->call([
-        ProductsTableSeeder::class,
-    ]);
+            ProductsTableSeeder::class,
+        ]);
+
+        // New Content Seeders
+        $this->call([
+            StorySeeder::class,
+            FundraisingSeeder::class,
+            ImagerySeeder::class,
+        ]);
     }
 }

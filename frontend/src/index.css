@@ -1,13 +1,48 @@
+/* Import Cultural Heritage Theme */
+@import './styles/cultural-theme.css';
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--cultural-bg-primary);
+  color: var(--cultural-text-primary);
+  line-height: 1.6;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Source Sans Pro', monospace;
+  background: var(--cultural-bg-secondary);
+  color: var(--cultural-text-primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--cultural-border-light);
+}
+
+/* Global Cultural Heritage Styles */
+* {
+  box-sizing: border-box;
+}
+
+.cultural-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.cultural-section {
+  padding: 40px 0;
+}
+
+.cultural-text-center {
+  text-align: center;
+}
+
+.cultural-mb-4 {
+  margin-bottom: 2rem;
+}
+
+.cultural-mt-4 {
+  margin-top: 2rem;
 }
