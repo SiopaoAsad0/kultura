@@ -146,6 +146,46 @@ export default function Register() {
               />
             </Form.Group>
 
+            {/* Role Selection */}
+            <Form.Group style={{ marginBottom: '1.5rem' }}>
+              <Form.Label style={{
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                color: '#374151',
+                marginBottom: '0.5rem'
+              }}>
+                🎭 Account Type
+              </Form.Label>
+              <Form.Select
+                value={form.role}
+                onChange={(e) => setForm({ ...form, role: e.target.value })}
+                required
+                style={{
+                  padding: '1rem 1.5rem',
+                  fontSize: '1.1rem',
+                  borderRadius: '12px',
+                  border: '2px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                  background: 'white'
+                }}
+              >
+                <option value="user">🛒 Customer - Browse and purchase products</option>
+                <option value="weaver">🎨 Weaver - Create and sell your products</option>
+              </Form.Select>
+              <Form.Text style={{ 
+                color: '#6b7280', 
+                fontSize: '0.9rem',
+                marginTop: '0.5rem',
+                display: 'block',
+                lineHeight: '1.4'
+              }}>
+                {form.role === 'user' 
+                  ? "🛒 As a customer, you can browse products, place orders, support fundraising, and share stories."
+                  : "🎨 As a weaver, you can create products, stories, and fundraising campaigns, but cannot place orders."
+                }
+              </Form.Text>
+            </Form.Group>
+
             {/* Terms and Conditions Checkbox */}
             <Form.Group style={{ marginBottom: '2rem' }}>
               <Form.Check
@@ -266,11 +306,38 @@ export default function Register() {
               • Use the platform for lawful purposes only
             </p>
 
-            <h5 style={{ color: '#374151', marginBottom: '0.5rem', marginTop: '1.5rem' }}>3. Role-Based Access</h5>
-            <p style={{ color: '#6b7280', lineHeight: '1.6', marginBottom: '1rem' }}>
-              <strong>Users:</strong> Can create orders, view stories, support fundraising campaigns, and upload gallery images.<br/>
-              <strong>Weavers:</strong> Can manage their own products, stories, and fundraising campaigns, but cannot place orders or make donations.
-            </p>
+            <h5 style={{ color: '#374151', marginBottom: '0.5rem', marginTop: '1.5rem' }}>3. Account Types & Permissions</h5>
+            <div style={{ 
+              background: '#f8fafc', 
+              border: '1px solid #e5e7eb', 
+              borderRadius: '8px', 
+              padding: '1rem', 
+              marginBottom: '1rem' 
+            }}>
+              <h6 style={{ color: '#1e40af', marginBottom: '0.5rem' }}>🛒 Customer Account</h6>
+              <p style={{ color: '#6b7280', lineHeight: '1.5', marginBottom: '1rem', fontSize: '0.9rem' }}>
+                Perfect for those who want to support indigenous communities by purchasing authentic products and supporting fundraising campaigns.
+              </p>
+              <ul style={{ color: '#6b7280', fontSize: '0.9rem', marginBottom: '1rem', paddingLeft: '1.5rem' }}>
+                <li>Browse and purchase indigenous products</li>
+                <li>Place orders and track deliveries</li>
+                <li>Support fundraising campaigns with donations</li>
+                <li>Share stories and upload gallery images</li>
+                <li>View and manage order history</li>
+              </ul>
+              
+              <h6 style={{ color: '#059669', marginBottom: '0.5rem', marginTop: '1rem' }}>🎨 Weaver Account</h6>
+              <p style={{ color: '#6b7280', lineHeight: '1.5', marginBottom: '1rem', fontSize: '0.9rem' }}>
+                Designed for indigenous artisans and cultural content creators who want to showcase and sell their work.
+              </p>
+              <ul style={{ color: '#6b7280', fontSize: '0.9rem', marginBottom: '0', paddingLeft: '1.5rem' }}>
+                <li>Create and manage your own products</li>
+                <li>Share cultural stories and traditions</li>
+                <li>Launch fundraising campaigns for community projects</li>
+                <li>Upload gallery images showcasing your culture</li>
+                <li>Cannot place orders or make purchases</li>
+              </ul>
+            </div>
 
             <h5 style={{ color: '#374151', marginBottom: '0.5rem', marginTop: '1.5rem' }}>4. Cultural Respect</h5>
             <p style={{ color: '#6b7280', lineHeight: '1.6', marginBottom: '1rem' }}>
