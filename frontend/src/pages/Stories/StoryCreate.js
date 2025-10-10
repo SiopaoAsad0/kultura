@@ -23,11 +23,6 @@ export default function StoryCreate({ user }) {
     setLoading(true);
 
     try {
-      if (user?.role === 'weaver') {
-        setError("Weavers cannot create stories.");
-        setLoading(false);
-        return;
-      }
 
       const token = localStorage.getItem("token");
       const res = await API.post('/stories', form, {
@@ -42,15 +37,15 @@ export default function StoryCreate({ user }) {
     }
   };
 
-  if (!user || user.role === 'weaver') {
+  if (!user) {
     return (
       <div className="page-container">
         <Container>
           <div className="container-cultural cultural-text-center">
-            <h3>Access Restricted</h3>
-            <p>Weavers cannot create stories.</p>
-            <Button onClick={() => navigate('/stories')} className="btn-cultural-primary">
-              ← Back
+            <h3>Login Required</h3>
+            <p>Please log in to create stories.</p>
+            <Button onClick={() => navigate('/login')} className="btn-cultural-primary">
+              Login
             </Button>
           </div>
         </Container>

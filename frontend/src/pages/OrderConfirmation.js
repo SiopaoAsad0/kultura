@@ -62,7 +62,7 @@ export default function OrderConfirmation() {
                 <h3 style={{ marginBottom: '1rem' }}>📋 Order Details</h3>
                 <p><strong>Order ID:</strong> #{order.id}</p>
                 <p><strong>Status:</strong> {order.status}</p>
-                <p><strong>Total:</strong> ₱{order.total_amount}</p>
+                <p><strong>Total:</strong> ₱{parseFloat(order.total).toFixed(2)}</p>
                 <p><strong>Items:</strong> {order.items?.length || 0}</p>
               </div>
             )}

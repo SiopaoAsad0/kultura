@@ -208,4 +208,20 @@ class Fundraising extends Model
             return asset('storage/' . $image);
         }, $this->gallery_images);
     }
+
+    /**
+     * Get the user who created the fundraising.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the donations for the fundraising.
+     */
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
 }

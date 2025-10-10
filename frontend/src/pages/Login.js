@@ -31,27 +31,55 @@ export default function Login({ setUser }) {  // <-- Add setUser here
   };
 
   return (
-    <div className="cultural-section">
-      <Container>
-        <div className="cultural-text-center cultural-mb-4">
-          <div className="header-cultural cultural-fade-in">
-            <h1>🔑 Welcome Back</h1>
-            <p>Sign in to continue your cultural journey</p>
-          </div>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+      <Container style={{ maxWidth: '600px', paddingTop: '6rem', paddingBottom: '4rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <h1 style={{
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+            fontWeight: '800',
+            color: '#1e40af',
+            marginBottom: '1rem',
+            letterSpacing: '-0.02em'
+          }}>
+            🔑 Welcome Back
+          </h1>
+          <p style={{
+            fontSize: '1.3rem',
+            color: '#6b7280'
+          }}>
+            Sign in to continue your cultural journey
+          </p>
         </div>
 
-        <div className="row justify-content-center">
-          <div className="col-md-6 col-lg-5">
-            <div className="container-cultural cultural-fade-in">
+        <div style={{
+          background: 'white',
+          borderRadius: '16px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          padding: '3rem',
+          border: '1px solid #e5e7eb'
+        }}>
               {error && (
-                <div className="alert-cultural-error cultural-mb-4">
+                <div style={{
+                  background: '#fef2f2',
+                  border: '2px solid #fca5a5',
+                  borderRadius: '12px',
+                  padding: '1rem',
+                  marginBottom: '2rem',
+                  color: '#dc2626',
+                  fontSize: '1rem'
+                }}>
                   ⚠️ {error}
                 </div>
               )}
               
-              <Form onSubmit={handleSubmit} className="form-cultural">
-                <Form.Group className="cultural-mb-3">
-                  <Form.Label className="cultural-font-secondary">
+              <Form onSubmit={handleSubmit}>
+                <Form.Group style={{ marginBottom: '1.5rem' }}>
+                  <Form.Label style={{
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '0.5rem'
+                  }}>
                     📧 Email Address
                   </Form.Label>
                   <Form.Control
@@ -60,12 +88,23 @@ export default function Login({ setUser }) {  // <-- Add setUser here
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     required
-                    className="cultural-font-secondary"
+                    style={{
+                      padding: '1rem 1.5rem',
+                      fontSize: '1.1rem',
+                      borderRadius: '12px',
+                      border: '2px solid #e5e7eb',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                    }}
                   />
                 </Form.Group>
 
-                <Form.Group className="cultural-mb-4">
-                  <Form.Label className="cultural-font-secondary">
+                <Form.Group style={{ marginBottom: '2rem' }}>
+                  <Form.Label style={{
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '0.5rem'
+                  }}>
                     🔒 Password
                   </Form.Label>
                   <Form.Control
@@ -74,38 +113,51 @@ export default function Login({ setUser }) {  // <-- Add setUser here
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
                     required
-                    className="cultural-font-secondary"
+                    style={{
+                      padding: '1rem 1.5rem',
+                      fontSize: '1.1rem',
+                      borderRadius: '12px',
+                      border: '2px solid #e5e7eb',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                    }}
                   />
                 </Form.Group>
 
-                <div className="d-grid">
-                  <Button 
-                    type="submit" 
-                    className="btn-cultural-primary"
-                    size="lg"
-                  >
-                    🚪 Sign In
-                  </Button>
-                </div>
+                <Button 
+                  type="submit" 
+                  className="btn-cultural-primary"
+                  style={{
+                    width: '100%',
+                    padding: '1.2rem',
+                    fontSize: '1.2rem',
+                    fontWeight: '700',
+                    borderRadius: '12px',
+                    boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)',
+                    marginBottom: '2rem'
+                  }}
+                >
+                  🚪 Sign In
+                </Button>
               </Form>
 
-              <div className="cultural-text-center cultural-mt-4">
-                <p className="cultural-font-secondary" style={{ color: 'var(--cultural-text-secondary)' }}>
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ 
+                  color: '#6b7280',
+                  fontSize: '1rem'
+                }}>
                   Don't have an account?{' '}
                   <Link 
                     to="/register" 
                     style={{ 
-                      color: 'var(--cultural-primary)', 
+                      color: '#3b82f6', 
                       textDecoration: 'none',
-                      fontWeight: '500'
+                      fontWeight: '600'
                     }}
                   >
                     Create one here
                   </Link>
                 </p>
               </div>
-            </div>
-          </div>
         </div>
       </Container>
     </div>

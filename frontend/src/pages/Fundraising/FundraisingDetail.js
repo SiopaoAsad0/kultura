@@ -94,11 +94,6 @@ export default function FundraisingDetail({ user }) {
           <Col lg={8}>
             <div className="container-cultural fade-in">
               <span className="badge-cultural">{fundraising.category}</span>
-              {fundraising.is_featured && (
-                <span className="badge-cultural" style={{ marginLeft: '0.5rem', background: '#d97706' }}>
-                  ⭐ Featured
-                </span>
-              )}
 
               <h1 className="cultural-font-primary" style={{ marginTop: '1rem', fontSize: '2.5rem' }}>
                 {fundraising.title}

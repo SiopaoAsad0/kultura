@@ -50,12 +50,12 @@ export default function App() {
         {user && <Route path="/cart" element={<Cart />} />}
         {user && <Route path="/checkout" element={<Checkout user={user} />} />}
         {user && <Route path="/orders" element={<OrderHistory user={user} />} />}
-        {user && <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />}
+        <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
         
         {/* Stories */}
         <Route path="/stories" element={<StoriesList user={user} />} />
         <Route path="/stories/:slug" element={<StoryDetail user={user} />} />
-        {user && user.role !== 'weaver' && <Route path="/stories/create" element={<StoryCreate user={user} />} />}
+        {user && <Route path="/stories/create" element={<StoryCreate user={user} />} />}
         
         {/* Fundraising */}
         <Route path="/fundraising" element={<FundraisingList user={user} />} />

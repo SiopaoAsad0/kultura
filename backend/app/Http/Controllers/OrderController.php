@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Cart;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -31,6 +33,108 @@ class OrderController extends Controller
             
         } catch (\Exception $e) {
             return $this->error('Failed to retrieve orders', 500, $e->getMessage());
+        }
+    }
+
+    /**
+     * Store a newly created order.
+     */
+    public function store(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            
+            // Block weavers from creating orders
+            if ($user->role === 'weaver') {
+                return $this->error('Weavers cannot create orders. This feature is for customers only.', 403);
+            }
+            
+            // Validate request
+            $validated = $request->validate([
+                'shipping_address' => 'required|string|max:500',
+                'contact_number' => 'required|string|max:20',
+                'notes' => 'nullable|string|max:1000',
+                'payment_method' => 'required|string|in:cash_on_delivery,bank_transfer,digital_wallet'
+            ]);
+
+            // Get cart items
+            $cartItems = Cart::with('product')
+                           ->where('user_id', $user->id)
+                           ->get();
+
+            if ($cartItems->isEmpty()) {
+                return $this->error('Your cart is empty', 400);
+            }
+
+            // Validate stock and calculate total
+            $subtotal = 0;
+            $orderItems = [];
+            
+            foreach ($cartItems as $item) {
+                if ($item->quantity > $item->product->stock) {
+                    return $this->error("Not enough stock for product: {$item->product->title}", 400);
+                }
+                
+                $itemTotal = $item->quantity * $item->product->price;
+                $subtotal += $itemTotal;
+                
+                $orderItems[] = [
+                    'product_id' => $item->product_id,
+                    'product_name' => $item->product->title,
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->price,
+                    'total' => $itemTotal
+                ];
+            }
+
+            // Calculate tax (12% VAT)
+            $taxRate = 0.12;
+            $tax = $subtotal * $taxRate;
+            $total = $subtotal + $tax;
+
+            // Start transaction
+            DB::beginTransaction();
+
+            // Create order
+            $order = Order::create([
+                'user_id' => $user->id,
+                'subtotal' => $subtotal,
+                'tax' => $tax,
+                'total' => $total,
+                'status' => 'pending',
+                'payment_status' => 'unpaid',
+                'payment_method' => $validated['payment_method'],
+                'shipping_address' => $validated['shipping_address'],
+                'notes' => $validated['notes'] ?? null,
+            ]);
+
+            // Create order items and reduce stock
+            foreach ($orderItems as &$item) {
+                $item['order_id'] = $order->id;
+                
+                // Reduce product stock
+                $product = \App\Models\Product::find($item['product_id']);
+                $product->decrement('stock', $item['quantity']);
+            }
+            
+            OrderItem::insert($orderItems);
+            
+            // Clear cart
+            Cart::where('user_id', $user->id)->delete();
+
+            DB::commit();
+            
+            // Load the order with items for response
+            $order->load(['items.product']);
+            
+            return $this->success([
+                'order' => $order,
+                'message' => 'Order placed successfully'
+            ], 'Order placed successfully', 201);
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->error('Failed to place order: ' . $e->getMessage(), 500);
         }
     }
 

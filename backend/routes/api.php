@@ -65,24 +65,22 @@ Route::middleware('auth:sanctum')->group(function() {
     });
     
     // Order routes
+    Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
 });
 
 // Public routes for stories, fundraising, and imagery
 Route::get('/stories', [App\Http\Controllers\StoryController::class, 'index']);
-Route::get('/stories/featured', [App\Http\Controllers\StoryController::class, 'featured']);
 Route::get('/stories/cordillera', [App\Http\Controllers\StoryController::class, 'cordillera']);
 Route::get('/stories/{story}', [App\Http\Controllers\StoryController::class, 'show']);
 Route::post('/stories/{story}/like', [App\Http\Controllers\StoryController::class, 'like']);
 
 Route::get('/fundraisings', [App\Http\Controllers\FundraisingController::class, 'index']);
-Route::get('/fundraisings/featured', [App\Http\Controllers\FundraisingController::class, 'featured']);
 Route::get('/fundraisings/cordillera', [App\Http\Controllers\FundraisingController::class, 'cordillera']);
 Route::get('/fundraisings/{fundraising}', [App\Http\Controllers\FundraisingController::class, 'show']);
 
 Route::get('/imageries', [App\Http\Controllers\ImageryController::class, 'index']);
-Route::get('/imageries/featured', [App\Http\Controllers\ImageryController::class, 'featured']);
 Route::get('/imageries/cordillera', [App\Http\Controllers\ImageryController::class, 'cordillera']);
 Route::get('/imageries/{imagery}', [App\Http\Controllers\ImageryController::class, 'show']);
 
@@ -97,6 +95,10 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/fundraisings', [App\Http\Controllers\FundraisingController::class, 'store']);
     Route::put('/fundraisings/{fundraising}', [App\Http\Controllers\FundraisingController::class, 'update']);
     Route::delete('/fundraisings/{fundraising}', [App\Http\Controllers\FundraisingController::class, 'destroy']);
+    
+    // Fundraising donations
+    Route::post('/fundraisings/{fundraising}/donate', [App\Http\Controllers\FundraisingController::class, 'donate']);
+    Route::get('/my-donations', [App\Http\Controllers\FundraisingController::class, 'myDonations']);
     
     // Imagery management
     Route::post('/imageries', [App\Http\Controllers\ImageryController::class, 'store']);

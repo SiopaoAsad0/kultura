@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('fundraisings_and_stories_tables', function (Blueprint $table) {
-            //
+        // Add user_id to fundraisings table
+        Schema::table('fundraisings', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->nullable()->after('id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+        });
+
+        // Add user_id to stories table
+        Schema::table('stories', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->nullable()->after('id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -21,8 +29,16 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('fundraisings_and_stories_tables', function (Blueprint $table) {
-            //
+        // Remove user_id from fundraisings table
+        Schema::table('fundraisings', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+        });
+
+        // Remove user_id from stories table
+        Schema::table('stories', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 };

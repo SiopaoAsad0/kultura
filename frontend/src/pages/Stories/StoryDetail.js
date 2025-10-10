@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 import API from "../../api/axios";
 import BackButton from "../../components/BackButton";
@@ -8,7 +8,6 @@ export default function StoryDetail({ user }) {
   const { slug } = useParams();
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -59,11 +58,6 @@ export default function StoryDetail({ user }) {
         <article className="container-cultural fade-in">
           <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
             <span className="badge-cultural">{story.category}</span>
-            {story.is_featured && (
-              <span className="badge-cultural" style={{ marginLeft: '0.5rem', background: '#d97706' }}>
-                ⭐ Featured
-              </span>
-            )}
             
             <h1 className="cultural-font-primary" style={{ 
               fontSize: 'clamp(1.8rem, 4vw, 3rem)',

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
@@ -6,7 +6,7 @@ import API from "../api/axios";
 import BackButton from "../components/BackButton";
 
 export default function Checkout({ user }) {
-  const { cart, clearCart } = useCart();
+  const { cart } = useCart();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     shipping_address: "",
@@ -16,7 +16,14 @@ export default function Checkout({ user }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+  // Total price - use item_total if available, otherwise calculate from price * quantity
+  const total = cart.reduce((sum, item) => {
+    if (item.item_total) {
+      return sum + parseFloat(item.item_total);
+    } else {
+      return sum + (parseFloat(item.price) * (item.quantity || 1));
+    }
+  }, 0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,14 +38,10 @@ export default function Checkout({ user }) {
       }
 
       const orderData = {
-        items: cart.map(item => ({
-          product_id: item.id,
-          quantity: 1,
-          price: item.price
-        })),
         shipping_address: form.shipping_address,
         contact_number: form.contact_number,
-        notes: form.notes
+        notes: form.notes,
+        payment_method: 'cash_on_delivery'
       };
 
       const token = localStorage.getItem("token");
@@ -47,8 +50,7 @@ export default function Checkout({ user }) {
       });
       
       if (res.data.success) {
-        clearCart();
-        navigate(`/order-confirmation/${res.data.data.id}`);
+        navigate(`/order-confirmation/${res.data.data.order.id}`);
       }
     } catch (err) {
       setError(err.response?.data?.message || "Failed to place order");
@@ -57,13 +59,19 @@ export default function Checkout({ user }) {
     }
   };
 
-  if (!user) {
-    navigate('/login');
-    return null;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
 
-  if (cart.length === 0) {
-    navigate('/products');
+    if (cart.length === 0) {
+      navigate('/products');
+      return;
+    }
+  }, [user, cart, navigate]);
+
+  if (!user || cart.length === 0) {
     return null;
   }
 

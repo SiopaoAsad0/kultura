@@ -17,7 +17,12 @@ export const CartProvider = ({ children, user }) => {
         const res = await API.get("/cart", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setCart(res.data);
+        // Handle API response structure
+        if (res.data.success && res.data.data && res.data.data.items) {
+          setCart(res.data.data.items);
+        } else {
+          setCart([]);
+        }
       } catch (err) {
         console.error("Failed to fetch cart:", err);
       }
@@ -37,7 +42,13 @@ export const CartProvider = ({ children, user }) => {
         { product_id: product.id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setCart([...cart, { ...product, quantity: 1 }]);
+      // Refresh cart from API after adding
+      const cartRes = await API.get("/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (cartRes.data.success && cartRes.data.data && cartRes.data.data.items) {
+        setCart(cartRes.data.data.items);
+      }
     } catch (err) {
       console.error("Failed to add to cart:", err);
     }
@@ -50,7 +61,13 @@ export const CartProvider = ({ children, user }) => {
       await API.delete(`/cart/${cartItemId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCart(cart.filter((item) => item.id !== cartItemId));
+      // Refresh cart from API after removing
+      const cartRes = await API.get("/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (cartRes.data.success && cartRes.data.data && cartRes.data.data.items) {
+        setCart(cartRes.data.data.items);
+      }
     } catch (err) {
       console.error("Failed to remove from cart:", err);
     }
