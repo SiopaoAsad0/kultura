@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import API from "../api/axios";
 import { Container, Form, Button, Table, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function WeaverDashboard({ user }) {
   const [products, setProducts] = useState([]);
@@ -59,8 +60,20 @@ const handleDelete = async (id) => {
       <Container>
         {/* Dashboard Header */}
         <div className="header-cultural cultural-fade-in">
-          <h1>⚒️ Weaver Dashboard</h1>
-          <p>Manage your cultural heritage products and share your craft with the world</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <h1>⚒️ Weaver Dashboard</h1>
+              <p>Manage your cultural heritage products and share your craft with the world</p>
+            </div>
+            <Button 
+              as={Link} 
+              to="/weaver/orders" 
+              className="btn-cultural-accent"
+              size="lg"
+            >
+              📋 View Orders
+            </Button>
+          </div>
         </div>
 
         {/* Add Product Form */}

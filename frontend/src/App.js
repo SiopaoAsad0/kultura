@@ -13,6 +13,7 @@ import OrderHistory from "./pages/OrderHistory";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import WeaverDashboard from "./pages/WeaverDashboard";
+import WeaverOrders from "./pages/WeaverOrders";
 import StoriesList from "./pages/Stories/StoriesList";
 import StoryDetail from "./pages/Stories/StoryDetail";
 import StoryCreate from "./pages/Stories/StoryCreate";
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/register" element={user ? <Navigate to="/" /> : <Register />} />
 
         {user?.role === "weaver" && <Route path="/dashboard" element={<WeaverDashboard user={user} />} />}
+        {user?.role === "weaver" && <Route path="/weaver/orders" element={<WeaverOrders />} />}
         
         {/* Products */}
         <Route path="/products" element={<ProductList user={user} />} />

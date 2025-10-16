@@ -28,11 +28,11 @@ class ProductRequest extends FormRequest
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'cultural_category_id' => 'nullable|exists:cultural_categories,id',
-            'heritage_origin' => 'required|string|max:100',
-            'materials_used' => 'required|string|max:255',
-            'cultural_significance' => 'required|string',
-            'crafting_technique' => 'required|string|max:255',
-            'crafting_time_hours' => 'required|integer|min:1',
+            'heritage_origin' => 'nullable|string|max:100',
+            'materials_used' => 'nullable|string|max:255',
+            'cultural_significance' => 'nullable|string',
+            'crafting_technique' => 'nullable|string|max:255',
+            'crafting_time_hours' => 'nullable|integer|min:1',
             'artisan_story' => 'nullable|string',
             'cultural_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_handmade' => 'boolean',
@@ -41,7 +41,6 @@ class ProductRequest extends FormRequest
         ];
 
         if ($this->isMethod('post')) {
-            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif|max:2048';
             $rules['cultural_images'] = 'nullable|array|max:5';
         }
 

@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Jane User',
             'email' => 'user@example.com',
             'password' => bcrypt('password'),
-            'role' => 'normal', 
+            'role' => 'user', 
         ]);
     }
 }

@@ -44,10 +44,7 @@ export default function Checkout({ user }) {
         payment_method: 'cash_on_delivery'
       };
 
-      const token = localStorage.getItem("token");
-      const res = await API.post('/orders', orderData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await API.post('/orders', orderData);
       
       if (res.data.success) {
         navigate(`/order-confirmation/${res.data.data.order.id}`);

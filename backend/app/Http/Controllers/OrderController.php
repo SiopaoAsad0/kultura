@@ -226,4 +226,92 @@ class OrderController extends Controller
             return $this->error('Failed to cancel order', 500, $e->getMessage());
         }
     }
+
+    /**
+     * Get all orders containing weaver's products.
+     */
+    public function weaverOrders(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            
+            if ($user->role !== 'weaver') {
+                return $this->error('Only weavers can access this endpoint', 403);
+            }
+
+            // Get orders that contain at least one product from this weaver
+            $orders = Order::with(['items.product', 'user' => function($query) {
+                $query->select('id', 'name', 'email');
+            }])
+            ->whereHas('items.product', function($query) use ($user) {
+                $query->where('weaver_id', $user->id);
+            })
+            ->latest()
+            ->paginate(15);
+
+            // Filter order items to only show weaver's products
+            $orders->getCollection()->transform(function($order) use ($user) {
+                $order->items = $order->items->filter(function($item) use ($user) {
+                    return $item->product && $item->product->weaver_id === $user->id;
+                })->values();
+                
+                // Calculate weaver's subtotal for this order
+                $weaverSubtotal = $order->items->sum('total');
+                $order->weaver_subtotal = $weaverSubtotal;
+                
+                return $order;
+            });
+
+            return $this->success($orders);
+            
+        } catch (\Exception $e) {
+            return $this->error('Failed to retrieve weaver orders', 500, $e->getMessage());
+        }
+    }
+
+    /**
+     * Confirm an order item (for weavers).
+     */
+    public function confirmOrder(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:processing,shipped,delivered',
+            'notes' => 'nullable|string|max:1000'
+        ]);
+
+        try {
+            $user = Auth::user();
+            
+            if ($user->role !== 'weaver') {
+                return $this->error('Only weavers can confirm orders', 403);
+            }
+
+            // Get the order and verify it contains weaver's products
+            $order = Order::with(['items.product'])
+                ->whereHas('items.product', function($query) use ($user) {
+                    $query->where('weaver_id', $user->id);
+                })
+                ->findOrFail($id);
+
+            // Don't allow changing cancelled or delivered orders
+            if (in_array($order->status, ['cancelled', 'delivered'])) {
+                return $this->error('Cannot modify order with status: ' . $order->status, 400);
+            }
+
+            // Update order status
+            $updateData = ['status' => $validated['status']];
+            
+            if (isset($validated['notes'])) {
+                $currentNotes = $order->notes ? $order->notes . "\n\n" : '';
+                $updateData['notes'] = $currentNotes . "[Weaver: {$user->name}] " . $validated['notes'];
+            }
+
+            $order->update($updateData);
+
+            return $this->success($order->load(['items.product', 'user']), 'Order status updated successfully');
+            
+        } catch (\Exception $e) {
+            return $this->error('Failed to confirm order: ' . $e->getMessage(), 500);
+        }
+    }
 }

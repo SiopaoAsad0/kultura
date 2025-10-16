@@ -13,10 +13,7 @@ export const CartProvider = ({ children, user }) => {
     const fetchCart = async () => {
       if (!user) return;
       try {
-        const token = localStorage.getItem("token");
-        const res = await API.get("/cart", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await API.get("/cart");
         // Handle API response structure
         if (res.data.success && res.data.data && res.data.data.items) {
           setCart(res.data.data.items);
@@ -36,40 +33,33 @@ export const CartProvider = ({ children, user }) => {
       return;
     }
     try {
-      const token = localStorage.getItem("token");
-      await API.post(
-        "/cart/add",
-        { product_id: product.id, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      // Refresh cart from API after adding
-      const cartRes = await API.get("/cart", {
-        headers: { Authorization: `Bearer ${token}` },
+      await API.post("/cart/add", { 
+        product_id: product.id, 
+        quantity: 1 
       });
+      // Refresh cart from API after adding
+      const cartRes = await API.get("/cart");
       if (cartRes.data.success && cartRes.data.data && cartRes.data.data.items) {
         setCart(cartRes.data.data.items);
       }
     } catch (err) {
       console.error("Failed to add to cart:", err);
+      alert("Failed to add to cart. Please try again.");
     }
   };
 
   const removeFromCart = async (cartItemId) => {
     if (!user) return;
     try {
-      const token = localStorage.getItem("token");
-      await API.delete(`/cart/${cartItemId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await API.delete(`/cart/${cartItemId}`);
       // Refresh cart from API after removing
-      const cartRes = await API.get("/cart", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const cartRes = await API.get("/cart");
       if (cartRes.data.success && cartRes.data.data && cartRes.data.data.items) {
         setCart(cartRes.data.data.items);
       }
     } catch (err) {
       console.error("Failed to remove from cart:", err);
+      alert("Failed to remove item. Please try again.");
     }
   };
 

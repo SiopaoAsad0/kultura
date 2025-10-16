@@ -43,17 +43,15 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/cultural-categories', [CulturalCategoryController::class, 'index']);
     Route::get('/cultural-categories/{culturalCategory}', [CulturalCategoryController::class, 'show']);
 
-    // Admin-only routes
-    Route::middleware('role:admin')->group(function() {
-        // Cultural Categories management
-        Route::post('/cultural-categories', [CulturalCategoryController::class, 'store']);
-        Route::put('/cultural-categories/{culturalCategory}', [CulturalCategoryController::class, 'update']);
-        Route::delete('/cultural-categories/{culturalCategory}', [CulturalCategoryController::class, 'destroy']);
-
-        // Product management (weaver only)
+    // Weaver-only routes for product management
+    Route::middleware('role:weaver')->group(function() {
         Route::post('/products', [ProductController::class, 'store']);
         Route::put('/products/{id}', [ProductController::class, 'update']);
         Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+        
+        // Weaver order management
+        Route::get('/weaver/orders', [OrderController::class, 'weaverOrders']);
+        Route::post('/weaver/orders/{id}/confirm', [OrderController::class, 'confirmOrder']);
     });
     
     // Cart routes
