@@ -1,0 +1,411 @@
+:root {
+  --k-blue: #1e40af;
+  --k-blue-mid: #2563eb;
+  --k-blue-soft: #dbeafe;
+  --k-ink: #0f172a;
+  --k-muted: #64748b;
+  --k-line: #e2e8f0;
+  --k-paper: #fffdf8;
+  --k-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+  --header-h: 64px;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  height: var(--header-h);
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.28);
+}
+
+.site-header-inner {
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.brand:hover { color: #fff !important; }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-chip {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.icon-chip:hover {
+  background: rgba(255,255,255,0.24);
+  color: #fff;
+}
+
+.cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+}
+
+.hamburger {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.16);
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 2.5px;
+  background: #fff;
+  border-radius: 99px;
+}
+
+.desktop-nav {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  margin-left: 18px;
+}
+
+.desktop-nav a {
+  color: rgba(255,255,255,0.92) !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active {
+  background: rgba(255,255,255,0.16);
+  color: #fff !important;
+}
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 1200;
+}
+
+.paper-menu {
+  position: fixed;
+  top: 76px;
+  right: 12px;
+  width: min(280px, calc(100vw - 24px));
+  background: var(--k-paper);
+  color: var(--k-ink);
+  border-radius: 8px 18px 18px 8px;
+  box-shadow: var(--k-shadow);
+  z-index: 1300;
+  padding: 18px 8px 18px 18px;
+  transform: rotate(-1.2deg);
+  animation: paper-in 0.18s ease-out;
+}
+
+.paper-menu::before {
+  content: "";
+  position: absolute;
+  inset: 8px auto 8px -7px;
+  width: 14px;
+  background:
+    radial-gradient(circle at 50% 8px, transparent 6px, #f1efe6 7px) 0 0 / 14px 22px;
+}
+
+.paper-menu h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--k-muted);
+  margin: 4px 12px 10px;
+}
+
+.paper-menu a,
+.paper-menu button.menu-link {
+  display: flex;
+  width: calc(100% - 10px);
+  text-align: left;
+  background: none;
+  border: 0;
+  color: var(--k-ink);
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.paper-menu a:hover,
+.paper-menu button.menu-link:hover {
+  background: var(--k-blue-soft);
+  color: var(--k-blue);
+}
+
+@keyframes paper-in {
+  from { opacity: 0; transform: translateY(-8px) rotate(-1.2deg); }
+  to { opacity: 1; transform: translateY(0) rotate(-1.2deg); }
+}
+
+.star-rating { display: inline-flex; gap: 2px; }
+.star-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  line-height: 1;
+  color: #cbd5e1;
+  cursor: pointer;
+}
+.star-btn.is-filled { color: #f59e0b; }
+.star-btn:disabled { cursor: default; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat-card, .panel-card {
+  background: #fff;
+  border: 1px solid var(--k-line);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.stat-card .label {
+  color: var(--k-muted);
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.stat-card .value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--k-blue);
+}
+
+.product-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  background: #e2e8f0;
+}
+
+.review-box textarea {
+  min-height: 90px;
+}
+
+.dropzone {
+  border: 2px dashed #93c5fd;
+  background: #eff6ff;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropzone input { display: none; }
+
+.preview-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+@media (min-width: 992px) {
+  .desktop-nav { display: flex; }
+  .stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .paper-menu { right: 28px; }
+}
+
+@media (max-width: 576px) {
+  .site-header-inner { padding: 0 10px; }
+  .brand { font-size: 1.1rem; }
+  .page-container, .cultural-section { padding: 16px 0 32px; }
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   GLOBAL READABILITY GUARANTEES
+   Ensures all text across the app is comfortable to read:
+   - generous base size & line-height
+   - strong, consistent contrast
+   - readable tables, form controls, badges and labels
+   ============================================================ */
+body {
+  font-size: 1rem;              /* 16px minimum base */
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings stay large & legible */
+h1, h2, h3, h4, h5, h6,
+.header-cultural h1,
+.panel-card h5,
+.cultural-font-primary {
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Secondary/muted text kept above a readable minimum with good contrast */
+.text-muted {
+  color: #52606d !important;   /* darker than default #6c757d for AA contrast */
+}
+
+/* Form controls: comfortable, readable text */
+.form-control,
+.form-select {
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 44px;
+}
+.form-control::placeholder {
+  color: #7b8794;
+  opacity: 1;
+}
+.form-label {
+  font-weight: 600;
+  color: #1f2933;
+  margin-bottom: 0.35rem;
+}
+
+/* Tables: readable padding + text */
+.table {
+  font-size: 1rem;
+  color: #1f2933;
+}
+.table th {
+  font-weight: 700;
+  color: #102a43;
+  white-space: nowrap;
+}
+.table td,
+.table th {
+  padding: 0.85rem 0.75rem;
+  vertical-align: middle;
+}
+
+/* Badges readable */
+.badge {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.4em 0.7em;
+}
+
+/* Stat cards & panels: crisp labels and values */
+.stat-card .label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3e4c59;
+}
+.stat-card .value {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+.panel-card h5 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #102a43;
+}
+
+/* Nav pills (admin tabs) readable */
+.nav-pills .nav-link {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #243b53;
+}
+.nav-pills .nav-link.active {
+  background: #1e40af;
+  color: #fff;
+}
+
+/* Links keep sufficient contrast on the cream background */
+a {
+  color: #1d4ed8;
+}
+
+/* Buttons: minimum readable text */
+.btn {
+  font-weight: 600;
+  font-size: 1rem;
+}
+

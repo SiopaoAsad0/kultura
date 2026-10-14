@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Container, Row, Col, Modal, Form, Button } from "react-bootstrap";
 import API from "../../api/axios";
 
@@ -62,18 +62,19 @@ export default function ImageryGallery({ user }) {
     setSelectedImage(null);
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = useCallback((event) => {
     if (event.key === 'Escape') {
       handleCloseModal();
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [handleKeyDown]);
 
   const handleUpload = async (e) => {
     e.preventDefault();

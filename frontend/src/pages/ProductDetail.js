@@ -4,6 +4,8 @@ import API from "../api/axios";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import BackButton from "../components/BackButton";
 import { useCart } from "../context/CartContext";
+import StarRating from "../components/StarRating";
+import { mediaUrl, formatRating } from "../utils/media";
 
 export default function ProductDetail({ user }) {
   const { id } = useParams();
@@ -58,14 +60,12 @@ export default function ProductDetail({ user }) {
           <Row className="g-4">
             <Col md={6}>
               {product.image_url && (
-                <div style={{
-                  height: '400px',
-                  backgroundImage: `url(${product.image_url})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '12px',
-                  marginBottom: '1.5rem'
-                }}></div>
+                <img
+                  src={mediaUrl(product.image_url)}
+                  alt={product.title}
+                  className="product-thumb"
+                  style={{ height: 400, marginBottom: "1.5rem" }}
+                />
               )}
             </Col>
             
@@ -74,10 +74,14 @@ export default function ProductDetail({ user }) {
                 <h1 className="cultural-font-primary" style={{ 
                   color: '#1e40af',
                   marginBottom: '1rem',
-                  fontSize: '2.5rem'
+                  fontSize: 'clamp(1.6rem, 4vw, 2.5rem)'
                 }}>
                   {product.title}
                 </h1>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <StarRating value={product.reviews_avg_rating || 0} readOnly />
+                  <span>{formatRating(product.reviews_avg_rating)} ({product.reviews_count || 0})</span>
+                </div>
                 
                 {product.story && (
                   <p className="cultural-font-secondary" style={{ 
@@ -148,6 +152,22 @@ export default function ProductDetail({ user }) {
               </div>
             </Col>
           </Row>
+          <div className="panel-card mt-4">
+            <h3>Customer reviews</h3>
+            {(!product.reviews || product.reviews.length === 0) && (
+              <p className="text-muted mb-0">No reviews yet. Customers can review after delivery.</p>
+            )}
+            {(product.reviews || []).map((review) => (
+              <div key={review.id} className="py-3 border-bottom">
+                <div className="d-flex align-items-center gap-2">
+                  <strong>{review.user?.name || "Customer"}</strong>
+                  <StarRating value={review.rating} readOnly />
+                  <span>{review.rating} / 5</span>
+                </div>
+                <p className="mb-0 text-muted">{review.comment || "No comment"}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </div>

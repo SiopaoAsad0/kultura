@@ -41,6 +41,7 @@ class ProductRequest extends FormRequest
         ];
 
         if ($this->isMethod('post')) {
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4096';
             $rules['cultural_images'] = 'nullable|array|max:5';
         }
 

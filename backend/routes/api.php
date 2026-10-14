@@ -6,6 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\Api\CulturalCategoryController;
 
 /*
@@ -26,6 +30,7 @@ Route::post('/register', [AuthController::class, 'register']);
 // Public product routes
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::post('/activity/view', [ActivityController::class, 'store']);
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function() {
@@ -52,7 +57,34 @@ Route::middleware('auth:sanctum')->group(function() {
         // Weaver order management
         Route::get('/weaver/orders', [OrderController::class, 'weaverOrders']);
         Route::post('/weaver/orders/{id}/confirm', [OrderController::class, 'confirmOrder']);
+        Route::get('/weaver/reviews', [ReviewController::class, 'weaverReviews']);
     });
+
+    Route::middleware('role:admin')->prefix('admin')->group(function () {
+        Route::get('/users', [AdminController::class, 'users']);
+        Route::get('/reviews', [AdminController::class, 'reviews']);
+        Route::get('/stats', [AdminController::class, 'stats']);
+
+        // Order / Delivery Management System (local simulation)
+        Route::get('/orders', [DeliveryController::class, 'orders']);
+        Route::post('/orders/{id}/assign-rider', [DeliveryController::class, 'assignRider']);
+        Route::post('/orders/{id}/delivery-status', [DeliveryController::class, 'updateDeliveryStatus']);
+
+        // Rider management
+        Route::get('/riders', [DeliveryController::class, 'riders']);
+        Route::post('/riders', [DeliveryController::class, 'storeRider']);
+        Route::put('/riders/{id}', [DeliveryController::class, 'updateRider']);
+        Route::delete('/riders/{id}', [DeliveryController::class, 'destroyRider']);
+
+        // Payments / transactions
+        Route::get('/payments', [DeliveryController::class, 'payments']);
+        Route::post('/payments/{id}/status', [DeliveryController::class, 'updatePaymentStatus']);
+
+        // Reports
+        Route::get('/reports', [DeliveryController::class, 'reports']);
+    });
+
+    Route::post('/reviews', [ReviewController::class, 'store']);
     
     // Cart routes
     Route::prefix('cart')->group(function() {

@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('fundraising_id')->constrained()->cascadeOnDelete();
+            $table->decimal('amount', 15, 2);
+            $table->text('message')->nullable();
+            $table->boolean('is_anonymous')->default(false);
+            $table->string('payment_method')->nullable();
+            $table->string('transaction_id')->nullable();
+            $table->string('status')->default('completed'); // completed, pending, refunded, failed
             $table->timestamps();
+
+            $table->index(['fundraising_id', 'status']);
         });
     }
 

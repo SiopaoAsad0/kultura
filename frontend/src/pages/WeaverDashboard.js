@@ -3,10 +3,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import API from "../api/axios";
 import { Container, Form, Button, Table, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { mediaUrl } from "../utils/media";
 
 export default function WeaverDashboard({ user }) {
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState({ title: "", story: "", stock: 0, price: 0 });
+  const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState("");
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -31,15 +34,26 @@ export default function WeaverDashboard({ user }) {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
+  if (!imageFile) {
+    alert("Please upload a product picture.");
+    return;
+  }
   try {
-    // Use /products to match backend
-    await API.post("/products", { ...form });
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("story", form.story);
+    formData.append("stock", form.stock);
+    formData.append("price", form.price);
+    formData.append("image", imageFile);
+    await API.post("/products", formData);
     setForm({ title: "", story: "", stock: 0, price: 0 });
+    setImageFile(null);
+    setPreview("");
     fetchProducts();
     alert("Product added successfully!");
   } catch (err) {
     console.error(err);
-    alert("Failed to add product");
+    alert(err.response?.data?.message || "Failed to add product");
   }
 };
 
@@ -65,14 +79,18 @@ const handleDelete = async (id) => {
               <h1>⚒️ Weaver Dashboard</h1>
               <p>Manage your cultural heritage products and share your craft with the world</p>
             </div>
+            <div className="d-flex flex-wrap gap-2">
             <Button 
               as={Link} 
               to="/weaver/orders" 
               className="btn-cultural-accent"
-              size="lg"
             >
-              📋 View Orders
+              Orders
             </Button>
+            <Button as={Link} to="/weaver/reviews" className="btn-cultural-primary">
+              Reviews
+            </Button>
+            </div>
           </div>
         </div>
 
@@ -144,6 +162,26 @@ const handleDelete = async (id) => {
                 className="cultural-font-secondary"
               />
             </Form.Group>
+
+            <Form.Group className="cultural-mb-4">
+              <Form.Label className="cultural-font-secondary">Product picture (required)</Form.Label>
+              <label className="dropzone">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    setImageFile(file);
+                    setPreview(URL.createObjectURL(file));
+                  }}
+                  required
+                />
+                <div><strong>Tap to upload a photo</strong></div>
+                <small>JPG, PNG, or WEBP up to 4MB</small>
+                {preview && <img src={preview} alt="Preview" className="preview-img" />}
+              </label>
+            </Form.Group>
             
             <Button 
               type="submit" 
@@ -165,6 +203,7 @@ const handleDelete = async (id) => {
               <Table className="table-cultural">
                 <thead>
                   <tr>
+                    <th>Photo</th>
                     <th>📝 Title</th>
                     <th>📖 Story</th>
                     <th>📦 Stock</th>
@@ -175,6 +214,11 @@ const handleDelete = async (id) => {
                 <tbody>
                   {products.map(p => (
                     <tr key={p.id}>
+                      <td>
+                        {p.image_url && (
+                          <img src={mediaUrl(p.image_url)} alt="" width="56" height="56" style={{ objectFit: "cover", borderRadius: 8 }} />
+                        )}
+                      </td>
                       <td className="cultural-font-secondary">
                         <strong>{p.title}</strong>
                       </td>

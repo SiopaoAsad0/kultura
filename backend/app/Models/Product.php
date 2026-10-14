@@ -136,6 +136,11 @@ class Product extends Model
         return $this->belongsTo(User::class, 'weaver_id');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     /**
      * Scope a query to only include available products.
      */

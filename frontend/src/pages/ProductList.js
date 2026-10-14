@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import API from "../api/axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { mediaUrl } from "../utils/media";
+import StarRating from "../components/StarRating";
 
 export default function ProductList({ user }) {
   const [products, setProducts] = useState([]);
@@ -78,7 +80,7 @@ export default function ProductList({ user }) {
                 {product.image_url && (
                   <div style={{
                     height: '250px',
-                    backgroundImage: `url(${product.image_url})`,
+                    backgroundImage: `url("${mediaUrl(product.image_url)}")`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                   }}></div>
@@ -93,6 +95,10 @@ export default function ProductList({ user }) {
                   }}>
                     {product.title}
                   </h4>
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    <StarRating value={product.reviews_avg_rating || 0} readOnly size="1rem" />
+                    <small>{Number(product.reviews_avg_rating || 0).toFixed(1)} / 5</small>
+                  </div>
                   <p style={{
                     color: '#6b7280',
                     fontSize: '1rem',

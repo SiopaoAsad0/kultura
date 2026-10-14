@@ -24,7 +24,8 @@ export default function Login({ setUser }) {  // <-- Add setUser here
       // Update App.js user state
       setUser(res.data.user);
 
-      navigate("/");
+      const role = res.data.user?.role;
+      navigate(role === "admin" ? "/admin" : role === "weaver" ? "/dashboard" : "/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }

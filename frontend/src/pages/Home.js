@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../api/axios";
 import { Button, Row, Col, Container, Form, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { mediaUrl } from "../utils/media";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -60,21 +61,21 @@ export default function Home() {
       <div style={{
         background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
         borderBottom: '4px solid #3b82f6',
-        paddingTop: '6rem',
-        paddingBottom: '5rem',
+        paddingTop: 'clamp(2.5rem, 8vw, 6rem)',
+        paddingBottom: 'clamp(2rem, 6vw, 5rem)',
         textAlign: 'center',
         position: 'relative'
       }}>
         <Container style={{ maxWidth: '1200px' }}>
           <div style={{ 
-            fontSize: '7rem', 
+            fontSize: 'clamp(3.5rem, 12vw, 7rem)', 
             marginBottom: '2rem',
             filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
           }}>
             🏛️
           </div>
           <h1 style={{
-            fontSize: 'clamp(3.5rem, 7vw, 7rem)',
+            fontSize: 'clamp(2.2rem, 8vw, 5.5rem)',
             fontWeight: '900',
             background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
             WebkitBackgroundClip: 'text',
@@ -262,7 +263,7 @@ export default function Home() {
                 {product.image_url && (
                   <div style={{
                     height: '200px',
-                    backgroundImage: `url(${product.image_url})`,
+                    backgroundImage: `url("${mediaUrl(product.image_url)}")`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                   }}></div>

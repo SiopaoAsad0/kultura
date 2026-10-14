@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         // User Seed
         $this->call(UsersTableSeeder::class);
 
+        // Delivery riders (for the admin Order/Delivery Management System)
+        $this->call(RidersTableSeeder::class);
+
         // Product Seed (runs after categories and users)
         $this->call([
             ProductsTableSeeder::class,

@@ -18,16 +18,21 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
+        'rider_id',
         'subtotal',
         'tax',
         'total',
         'status',
+        'delivery_status',
         'payment_status',
         'payment_method',
         'transaction_id',
         'shipping_address',
         'billing_address',
         'notes',
+        'assigned_at',
+        'delivered_at',
+        'delivery_notes',
     ];
 
     /**
@@ -39,7 +44,19 @@ class Order extends Model
         'subtotal' => 'decimal:2',
         'tax' => 'decimal:2',
         'total' => 'decimal:2',
+        'assigned_at' => 'datetime',
+        'delivered_at' => 'datetime',
     ];
+
+    /**
+     * Delivery statuses (local simulation)
+     */
+    public const DELIVERY_UNASSIGNED = 'unassigned';
+    public const DELIVERY_ASSIGNED = 'assigned';
+    public const DELIVERY_PICKED_UP = 'picked_up';
+    public const DELIVERY_IN_TRANSIT = 'in_transit';
+    public const DELIVERY_DELIVERED = 'delivered';
+    public const DELIVERY_FAILED = 'failed';
 
     /**
      * Order statuses
@@ -67,11 +84,24 @@ class Order extends Model
     }
 
     /**
+     * Get the rider assigned to deliver this order.
+     */
+    public function rider(): BelongsTo
+    {
+        return $this->belongsTo(Rider::class);
+    }
+
+    /**
      * Get the items for the order.
      */
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 
     /**

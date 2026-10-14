@@ -23,11 +23,9 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Clear invalid token
+    if (error.response?.status === 401 && !error.config?.url?.includes("/activity/view")) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      // Redirect to login
       window.location.href = "/login";
     }
     return Promise.reject(error);

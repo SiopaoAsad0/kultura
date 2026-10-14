@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import API from "../api/axios";
 import BackButton from "../components/BackButton";
+import StarRating from "../components/StarRating";
 
 export default function OrderHistory({ user }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reviewDrafts, setReviewDrafts] = useState({});
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -25,6 +27,30 @@ export default function OrderHistory({ user }) {
     };
     fetchOrders();
   }, []);
+
+  const itemReview = (order, productId) =>
+    (order.reviews || []).find((review) => Number(review.product_id) === Number(productId));
+
+  const submitReview = async (order, productId) => {
+    const draft = reviewDrafts[`${order.id}-${productId}`] || {};
+    if (!draft.rating) {
+      alert("Please choose a star rating.");
+      return;
+    }
+    try {
+      await API.post("/reviews", {
+        order_id: order.id,
+        product_id: productId,
+        rating: draft.rating,
+        comment: draft.comment || "",
+      });
+      alert("Thanks for your review!");
+      const res = await API.get("/orders");
+      setOrders(res.data.data.data || res.data.data || []);
+    } catch (err) {
+      alert(err.response?.data?.message || "Could not submit review");
+    }
+  };
 
   return (
     <div className="page-container">
@@ -114,13 +140,40 @@ export default function OrderHistory({ user }) {
                         </div>
                         {order.items && order.items.length > 0 && (
                           <div style={{ marginTop: '0.5rem' }}>
-                            <p style={{
-                              color: '#6b7280',
-                              fontSize: '0.9rem',
-                              marginBottom: '0.25rem'
-                            }}>
-                              Items: {order.items.map(item => item.product_name).join(', ')}
-                            </p>
+                            {order.items.map((item) => {
+                              const existing = itemReview(order, item.product_id);
+                              const key = `${order.id}-${item.product_id}`;
+                              const draft = reviewDrafts[key] || { rating: 0, comment: "" };
+                              return (
+                                <div key={item.id || key} className="review-box" style={{ marginBottom: "1rem" }}>
+                                  <p style={{ marginBottom: 4 }}>{item.product_name} × {item.quantity}</p>
+                                  {order.status === "delivered" && !existing && (
+                                    <>
+                                      <StarRating
+                                        value={draft.rating}
+                                        onChange={(rating) => setReviewDrafts((prev) => ({ ...prev, [key]: { ...draft, rating } }))}
+                                      />
+                                      <Form.Control
+                                        as="textarea"
+                                        className="mt-2"
+                                        placeholder="Write a review (optional)"
+                                        value={draft.comment}
+                                        onChange={(e) => setReviewDrafts((prev) => ({ ...prev, [key]: { ...draft, comment: e.target.value } }))}
+                                      />
+                                      <Button className="mt-2" size="sm" onClick={() => submitReview(order, item.product_id)}>
+                                        Submit review
+                                      </Button>
+                                    </>
+                                  )}
+                                  {existing && (
+                                    <div className="d-flex align-items-center gap-2">
+                                      <StarRating value={existing.rating} readOnly />
+                                      <small>{existing.rating} / 5</small>
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
