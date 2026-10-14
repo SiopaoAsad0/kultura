@@ -94,15 +94,23 @@ export default function Header({ user, setUser }) {
             ))}
             {user ? (
               <>
-                <div style={{ padding: "10px 12px", color: "#64748b", fontSize: "0.9rem" }}>
-                  {user.name} · {user.role}
+                <div className="menu-divider" />
+                <div className="menu-user">
+                  <span className="menu-avatar" aria-hidden="true">
+                    {(user.name || "U").charAt(0).toUpperCase()}
+                  </span>
+                  <span className="menu-user-meta">
+                    <strong>{user.name}</strong>
+                    <small>{user.role}</small>
+                  </span>
                 </div>
-                <button className="menu-link" type="button" onClick={handleLogout}>
+                <button className="menu-logout" type="button" onClick={handleLogout}>
                   Logout
                 </button>
               </>
             ) : (
               <>
+                <div className="menu-divider" />
                 <Link to="/login">Login</Link>
                 <Link to="/register">Register</Link>
               </>
